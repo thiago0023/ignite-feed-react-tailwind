@@ -16,7 +16,7 @@ module.exports = {
         },
         primary: {
           "base": "#00875F",
-          "light": "##00B37E",
+          "light": "#00B37E",
         },
         danger: {
           "base": "#F75A68",
@@ -24,6 +24,9 @@ module.exports = {
       },
       fontFamily: {
         roboto: "'Roboto', sans-serif",
+      },
+      gridTemplateColumns: {
+        'main': '256px 1fr',
       }
     },
   },
