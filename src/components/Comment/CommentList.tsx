@@ -1,12 +1,16 @@
 import React from 'react'
-import Comment from './Comment'
+import Comment, { CommentType } from './Comment'
 
-export default function CommentList() {
+interface CommentListProps {
+    comments?: CommentType[]
+}
+
+export default function CommentList({ comments }: CommentListProps) {
   return (
     <div className='mt-8'>
-        <Comment />
-        <Comment />
-        <Comment />
+        {comments?.map(comment => (
+            <Comment key={comment.id} comment={comment} />
+        ))} 
     </div>
   )
 }

@@ -1,14 +1,22 @@
 import { Trash } from 'phosphor-react'
 import React from 'react'
+import { Author } from '../../Post/Post';
 
-export default function CommentBoxHeader() {
+interface CommentBoxHeaderProps {
+    author: Author;
+    publishedAt?: Date;
+}
+
+export default function CommentBoxHeader({ author, publishedAt }: CommentBoxHeaderProps) {
+    const { name, avatar_url, role } = author;
+
     return (
         <header className='flex items-start justify-between'>
             <div className='flex flex-col'>
-                <strong className='text-sm text-gray-100 leading-relaxed'>Nome do usuário</strong>
+                <strong className='text-sm text-gray-100 leading-relaxed'>{name}</strong>
                 <time
                     title="03 de Junho de 2022 às 01:00"
-                    dateTime='2022-06-03 01:00:00'
+                    dateTime={publishedAt?.toDateString() ?? '2022-06-03 01:00:00'}
                     className='text-xs text-gray-400 leading-relaxed'
                 >
                     Cerca de 1h
