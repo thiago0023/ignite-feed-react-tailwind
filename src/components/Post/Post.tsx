@@ -1,4 +1,5 @@
 import React from 'react'
+import { usePosts } from '../../hooks/usePosts'
 import { CommentType } from '../Comment/Comment'
 import CommentList from '../Comment/CommentList'
 import PostContent from './PostContent'
@@ -10,7 +11,6 @@ export type PostType = {
     publishedAt: Date;
     content: string;
     author: Author;
-    comments?: CommentType[];
 }
 
 interface PostProps {
@@ -24,13 +24,15 @@ export type Author = {
 }
 
 export default function Post({ post }: PostProps) {
+    const { getCommentsByPostID } = usePosts();
+    const comments = getCommentsByPostID(post.id);
 
     return (
         <article className='bg-gray-600 rounded-lg p-10 mt-8 first:mt-0 '>
             <PostHeader author={post.author} publishedAt={post.publishedAt} />
             <PostContent content={post.content}/>
-            <PostFooter />
-            {post.comments && <CommentList comments={post.comments}/> }
+            <PostFooter author={post.author} postID={post.id}/>
+            {comments && <CommentList comments={comments}/> }
         </article>
     )
 }

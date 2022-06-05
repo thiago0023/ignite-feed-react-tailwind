@@ -1,15 +1,22 @@
+import { format, formatDistanceToNow } from 'date-fns';
+import ptBR from 'date-fns/locale/pt-BR';
 import React from 'react'
 import Avatar from '../Avatar'
 import { Author } from './Post'
 
 interface PostHeaderProps {
-    author?: Author;
-    publishedAt?: Date;
+    author: Author;
+    publishedAt: Date;
 }
 
 export default function PostHeader({ author, publishedAt }: PostHeaderProps) {
-
     const { avatar_url, name, role } = author || {};
+    
+    const publishedAtFormatted = format(publishedAt, "d 'de' LLLL HH:mm'h'", { locale: ptBR });
+    const publishedDateRelativeToNow = formatDistanceToNow(publishedAt, { 
+        locale: ptBR,
+        addSuffix: true
+    });
 
     return (
         <header className='flex items-center justify-between'>
@@ -21,11 +28,11 @@ export default function PostHeader({ author, publishedAt }: PostHeaderProps) {
                 </div>
             </div>
             <time
-                title="03 de Junho de 2022 às 01:00"
-                dateTime={publishedAt?.toDateString() ?? "2022-06-03 01:00:00"}
+                title={publishedAtFormatted}
+                dateTime={publishedAt.toISOString()}
                 className='text-sm text-gray-400'
             >
-                Publicado há 1h
+                Publicado {publishedDateRelativeToNow}
             </time>
         </header>
     )

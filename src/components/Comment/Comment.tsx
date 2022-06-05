@@ -6,10 +6,16 @@ import CommentFooter from './CommentFooter'
 
 export type CommentType = {
     author: Author;
-    content: string;
+    content: ContentLine[];
     publishedAt: Date;
     id: number | string;
     likes: number;
+    postID: number | string;
+}
+
+interface ContentLine  {
+    type: "link" | "text";
+    content: string;
 }
 
 interface CommentProps {
@@ -23,7 +29,7 @@ export default function Comment({ comment }: CommentProps) {
         <div className='mt-6 flex gap-4'>
             <Avatar src={author.avatar_url}/>
             <div className='flex-1'>
-                <CommentBox author={author} content={content} publishedAt={publishedAt} key={id}/>
+                <CommentBox comment={comment} key={id}/>
                 <CommentFooter />
             </div>
         </div>
