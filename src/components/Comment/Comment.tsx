@@ -30,7 +30,7 @@ export default function Comment({ comment }: CommentProps) {
             <Avatar src={author.avatar_url}/>
             <div className='flex-1'>
                 <CommentBox comment={comment} key={id}/>
-                <CommentFooter />
+                <CommentFooter commentID={id} likes={likes}/>
             </div>
         </div>
     )

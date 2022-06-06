@@ -8,6 +8,7 @@ interface PostContextData {
     onDeleteComment: (commentID: number | string) => void;
     onUpdateComments: (newComment: CommentType) => void;
     getCommentsByPostID: (postID: number | string) => CommentType[];
+    raiseCommentLikeCount: (ammount: number, commentID: number | string) => void;
     posts?: PostType[];
 }
 
@@ -29,12 +30,26 @@ export default function PostProvider({ children }: PostProviderProps) {
         setComments([...newComments]);
     }
 
+    const raiseCommentLikeCount = (ammount: number = 1, commentID: number | string): void => {
+        const modifiedComments = comments.map(comment => {
+            if(comment.id == commentID) {
+                return {
+                    ...comment,
+                    likes: comment.likes + ammount
+                }
+            }
+            return comment;
+        });
+
+        setComments([...modifiedComments]);
+    }
+
     const onUpdateComments = (newComment: CommentType): void => {
         setComments([...comments, newComment]);
     }
 
     return (
-        <PostContext.Provider value={{posts, getCommentsByPostID, onDeleteComment, onUpdateComments}}>
+        <PostContext.Provider value={{posts, getCommentsByPostID, onDeleteComment, onUpdateComments, raiseCommentLikeCount}}>
             {children}
         </PostContext.Provider>
     )
